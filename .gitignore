@@ -1,0 +1,12 @@
+# node_modeles
+node_modules/
+
+# output
+lib/
+
+# variables
+_import/*
+!_import/.gitkeep
+
+# .env
+.env

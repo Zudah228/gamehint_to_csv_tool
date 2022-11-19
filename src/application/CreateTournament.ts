@@ -1,7 +1,7 @@
 import path from "path";
 import { writeFile } from "fs";
 
-import { Csv } from "../domain/repositories/game_hint/GameHintCsv";
+import { GameHintCsv } from "../domain/repositories/game_hint/GameHintCsv";
 import { GamehintParticipant } from "../domain/entities/gamehint/Participant";
 import {
   TournamentCreateParam,
@@ -30,7 +30,7 @@ class CreateTournament {
       console.error("コマンドライン引数が無効です。");
       return;
     }
-    const participantsCsv = new Csv<GamehintParticipant>(
+    const participantsCsv = new GameHintCsv<GamehintParticipant>(
         `${path.dirname("")}/_import/${csvFileName}.csv`
     );
 
@@ -79,7 +79,7 @@ class CreateTournament {
     }
 
     console.log("参加者の追加に成功しました！");
-    console.log(createResult.url);
+    console.log(`URL: ${createResult.url}`);
   }
 }
 

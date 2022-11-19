@@ -3,6 +3,8 @@ node_modules/
 
 # output
 lib/
+_export/*
+!_export/.gitkeep
 
 # variables
 _import/*

@@ -1,6 +1,6 @@
 import { isNull } from "./Helper";
 
-type Value = string | number | boolean | null
+type Value = string | number | boolean | null;
 /**
  * records の CSV を Blob に変換、URL を生成する。
  * key をヘッダーとして一番初めの列に追加する。
@@ -12,10 +12,7 @@ type Value = string | number | boolean | null
  * @return {string} - 生成した CSV の URL。
  */
 
-export function generateCsvStr(
-    records: Record<string, Value>[],
-    keys?: string[]
-): string {
+export function generateCsvStr(records: Record<string, Value>[], keys?: string[]): string {
   if (records.length === 0) {
     return "";
   }

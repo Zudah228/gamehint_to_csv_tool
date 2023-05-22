@@ -1,6 +1,9 @@
 import { isObject } from "../../../../utils/Helper";
 import { TournamentState, RankedBy, TournamentType } from "./types";
 
+/**
+ * GameHint のトーナメント
+ */
 export class Tournament {
   accept_attachments!: boolean;
   allow_participant_match_reporting!: boolean;
@@ -65,7 +68,7 @@ export class Tournament {
   team_convertable!: boolean;
   group_stages_were_started!: boolean;
 
-  static fromJson(data: unknown): Tournament {
+  static fromJson = (data: unknown): Tournament => {
     if (!isObject(data) || !("tournament" in data)) {
       throw new Error("Tournament.fromJson");
     }
@@ -73,5 +76,5 @@ export class Tournament {
     // response.data.tournament に、各プロパティがある
     // Todo: 型チェック
     return data.tournament as Tournament;
-  }
+  };
 }

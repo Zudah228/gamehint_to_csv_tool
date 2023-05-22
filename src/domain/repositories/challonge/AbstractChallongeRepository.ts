@@ -1,19 +1,16 @@
-import fetch, { RequestInit, Response } from "node-fetch";
 import { CHALLONGE_API_KEY } from "../../../utils/Constants";
 import { AppError } from "../../exception/AppError";
 import { isChallongeValidationError } from "./ChallongeValidationError";
 import { parameters } from "./Types";
 
+/**
+ *
+ */
 export class AbstractChallongeRepository {
-  protected async fetch<T>(
-      route: string,
-      parameters?: parameters,
-      requestInit?: RequestInit
-  ): Promise<T> {
-    const url = `https://api.challonge.com/v1/${route}.json?api_key=${CHALLONGE_API_KEY}${this.#toUrl(
-        parameters
-    )}`;
-    console.log(`request url: ${url}`);
+  protected fetch = async <T>(route: string, parameters?: parameters, requestInit?: RequestInit): Promise<T> => {
+    const url = `https://api.challonge.com/v1/${route}.json?api_key=${CHALLONGE_API_KEY}${this.#toUrl(parameters)}`;
+
+    console.info(`request url: ${url}`);
 
     const res = await fetch(url, requestInit);
 
@@ -33,25 +30,23 @@ export class AbstractChallongeRepository {
       case 406:
         throw new AppError({
           name: "challonge",
-          message:
-            "Requested format is not supported - request JSON or XML only",
+          message: "Requested format is not supported - request JSON or XML only",
         });
       case 422:
         throw await this.#validationError(res);
       case 500:
         throw new AppError({
           name: "challonge",
-          message:
-            "Something went wrong on our end. If you continually receive this, please contact us.",
+          message: "Something went wrong on our end. If you continually receive this, please contact us.",
         });
     }
     throw new AppError({
       name: "challonge",
       message: "unhandled error",
     });
-  }
+  };
 
-  async #validationError(res: Response): Promise<AppError> {
+  #validationError = async (res: Response): Promise<AppError> => {
     const error = await res.json();
     if (!isChallongeValidationError(error)) {
       return new AppError({
@@ -63,15 +58,12 @@ export class AbstractChallongeRepository {
       name: "challonge",
       message: error.errors.toString(),
     });
-  }
+  };
 
-  #toUrl(parameters?: parameters): string {
+  #toUrl = (parameters?: parameters): string => {
     if (parameters === undefined) return "";
-    return Object.keys(parameters).reduce<string>(
-        (previousValue, currentKey) => {
-          return previousValue + "&" + currentKey + "=" + parameters[currentKey];
-        },
-        ""
-    );
-  }
+    return Object.keys(parameters).reduce<string>((previousValue, currentKey) => {
+      return previousValue + "&" + currentKey + "=" + parameters[currentKey];
+    }, "");
+  };
 }

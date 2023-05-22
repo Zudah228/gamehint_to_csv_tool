@@ -1,4 +1,4 @@
 export type SpreadSheetResult = {
-  sheetId: string
-  url: string
+  sheetId: string;
+  url: string;
 };

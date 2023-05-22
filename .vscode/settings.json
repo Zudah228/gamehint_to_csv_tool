@@ -2,6 +2,10 @@
   "cSpell.words": [
     "camelcase",
     "CHALLONGE",
-    "Gamehint"
-  ]
+    "Gamehint",
+    "linebreak"
+  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
 }

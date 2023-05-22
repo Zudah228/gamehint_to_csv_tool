@@ -1,59 +1,45 @@
-import { AbstractChallongeRepository } from "./AbstractChallongeRepository";
 import { Tournament } from "../../entities/challonge/tournament/Tournament";
-import {
-  TournamentState,
-  TournamentType,
-} from "../../entities/challonge/tournament/types";
+import { TournamentState, TournamentType } from "../../entities/challonge/tournament/types";
+import { AbstractChallongeRepository } from "./AbstractChallongeRepository";
 
 class TournamentRepository extends AbstractChallongeRepository {
   private static instance: TournamentRepository;
-  static getInstance() {
+  static getInstance = () => {
     if (!TournamentRepository.instance) {
       TournamentRepository.instance = new TournamentRepository();
     }
     return TournamentRepository.instance;
-  }
+  };
 
-  async retrieve(
-      tournamentId: string,
-      parameters?: TournamentRetrieveParam
-  ): Promise<Tournament> {
-    const result = await this.fetch<Tournament>(
-        `tournaments/${tournamentId}`,
-        parameters,
-        {
-          method: "GET",
-        }
-    );
+  retrieve = async (tournamentId: string, parameters?: TournamentRetrieveParam): Promise<Tournament> => {
+    const result = await this.fetch<Tournament>(`tournaments/${tournamentId}`, parameters, {
+      method: "GET",
+    });
     return Tournament.fromJson(result);
-  }
+  };
 
-  async list(parameters?: TournamentListParam): Promise<Tournament[]> {
+  list = async (parameters?: TournamentListParam): Promise<Tournament[]> => {
     const result = await this.fetch<unknown[]>("tournaments", parameters, {
       method: "GET",
     });
     return result.map((e) => Tournament.fromJson(e));
-  }
+  };
 
-  async create(parameters?: TournamentCreateParam): Promise<Tournament> {
+  create = async (parameters?: TournamentCreateParam): Promise<Tournament> => {
     const result = await this.fetch<unknown>("tournaments", parameters, {
       method: "POST",
     });
 
     return Tournament.fromJson(result);
-  }
+  };
 
-  async delete(tournamentId: string): Promise<Tournament> {
-    const result = await this.fetch<unknown>(
-        `tournaments/${tournamentId}`,
-        undefined,
-        {
-          method: "DELETE",
-        }
-    );
+  delete = async (tournamentId: string): Promise<Tournament> => {
+    const result = await this.fetch<unknown>(`tournaments/${tournamentId}`, undefined, {
+      method: "DELETE",
+    });
 
     return Tournament.fromJson(result);
-  }
+  };
 }
 
 export const tournamentRepository = TournamentRepository.getInstance();

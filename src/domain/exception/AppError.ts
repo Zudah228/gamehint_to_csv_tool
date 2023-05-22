@@ -1,5 +1,8 @@
-export type AppErrorName = "challonge" | "unknown";
+export type AppErrorName = "challonge" | "invalid" | "unknown";
 
+/**
+ * エラー型
+ */
 export class AppError implements Error {
   constructor({
     name,

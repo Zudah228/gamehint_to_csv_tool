@@ -3,7 +3,7 @@ Gamehint で出力した参加者リストから、Challonge に登録する。
 
 ## 環境
 ```markdown
-NodeJS: 16.x
+NodeJS: 19.x
 JavaScript: es2022
 TypeScript: 4.7.x
 ```
